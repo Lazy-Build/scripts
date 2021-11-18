@@ -15,7 +15,8 @@ jobs:
         id: changes
         # Set outputs using the command.
         run: |
-          echo "::set-output name=all::$(git diff --name-only --diff-filter=ACMRT ${{ github.base_ref }} ${{ github.head_ref }} | xargs)"
+          git fetch origin "+refs/heads/${{github.base_ref}}:refs/remote/origin/${{github.head_ref}}"
+          echo "::set-output name=all::$(git diff --name-only --diff-filter=ACMRT ${{ ~ }} ${{ github.head_ref }} | xargs)"
           echo "::set-output name=ts::$(git diff --name-only --diff-filter=ACMRT ${{ github.base_ref }} ${{ github.head_ref }} | grep .ts$ | xargs)"
 
   ubuntu-checks:
