@@ -24,6 +24,10 @@ jobs:
           echo "::set-output name=debian-files::$(echo "$DEBIAN_FILES")"
           echo "::set-output name=centos-files::$(echo "$CENTOS_FILES")"
           echo "::set-output name=rhel-files::$(echo "$RHEL_FILES")"
+          echo "$UBUNTU_FILES"
+          echo "$DEBIAN_FILES"
+          echo "$CENTOS_FILES"
+          echo "$RHEL_FILES"
 
   ubuntu-checks:
     name: Run modified scripts to test for errors on Ubuntu
