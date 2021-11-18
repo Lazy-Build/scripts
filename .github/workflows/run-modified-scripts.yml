@@ -16,10 +16,10 @@ jobs:
         # Set outputs using the command.
         run: |
           git fetch origin "+refs/heads/${{github.base_ref}}:refs/remote/origin/${{github.head_ref}}"
-          UBUNTU_FILES="$(git diff --diff-filter=d --name-only origin/"${{github.base_ref}}" -- | grep ubuntu | base64 -w 0)"
-          DEBIAN_FILES="$(git diff --diff-filter=d --name-only origin/"${{github.base_ref}}" -- | grep debian | base64 -w 0)"
-          CENTOS_FILES="$(git diff --diff-filter=d --name-only origin/"${{github.base_ref}}" -- | grep centos | base64 -w 0)"
-          RHEL_FILES="$(git diff --diff-filter=d --name-only origin/"${{github.base_ref}}" -- | grep rhel | base64 -w 0)"
+          export UBUNTU_FILES="$(git diff --diff-filter=d --name-only origin/"${{github.base_ref}}" -- | grep ubuntu | base64 -w 0)"
+          export DEBIAN_FILES="$(git diff --diff-filter=d --name-only origin/"${{github.base_ref}}" -- | grep debian | base64 -w 0)"
+          export CENTOS_FILES="$(git diff --diff-filter=d --name-only origin/"${{github.base_ref}}" -- | grep centos | base64 -w 0)"
+          export RHEL_FILES="$(git diff --diff-filter=d --name-only origin/"${{github.base_ref}}" -- | grep rhel | base64 -w 0)"
           echo "::set-output name=ubuntu-files::$(UBUNTU_FILES)"
           echo "::set-output name=debian-files::$(DEBIAN_FILES)"
           echo "::set-output name=centos-files::$(CENTOS_FILES)"
