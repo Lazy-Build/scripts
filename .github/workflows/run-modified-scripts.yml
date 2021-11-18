@@ -1,0 +1,73 @@
+name: Checks
+on: [ pull_request, workflow_dispatch  ]
+jobs:
+  ubuntu-checks:
+    name: Run modified scripts to test for errors
+    runs-on: ubuntu-latest
+    container: 'ubuntu:latest'
+    steps:
+      - uses: actions/checkout@v1
+      - id: files
+        uses: jitterbit/get-changed-files@v1
+        with:
+          format: 'csv'
+      - run: |
+          set -x
+          set -e
+          mapfile -d ',' -t added_modified_files < <(printf '%s,' '${{ steps.files.outputs.added_modified }}' | grep -i ubuntu)
+          for added_modified_file in "${added_modified_files[@]}"; do
+            bash "${added_modified_file}"
+          done
+  centos-checks:
+    name: Run modified scripts to test for errors
+    runs-on: ubuntu-latest
+    container: 'centos:latest'
+    steps:
+      - uses: actions/checkout@v1
+      - id: files
+        uses: jitterbit/get-changed-files@v1
+        with:
+          format: 'csv'
+      - run: |
+          set -x
+          set -e
+          mapfile -d ',' -t added_modified_files < <(printf '%s,' '${{ steps.files.outputs.added_modified }}' | grep -i centos)
+          for added_modified_file in "${added_modified_files[@]}"; do
+            bash "${added_modified_file}"
+          done
+
+  debian-checks:
+    name: Run modified scripts to test for errors
+    runs-on: ubuntu-latest
+    container: 'debian:latest'
+    steps:
+      - uses: actions/checkout@v1
+      - id: files
+        uses: jitterbit/get-changed-files@v1
+        with:
+          format: 'csv'
+      - run: |
+          set -x
+          set -e
+          mapfile -d ',' -t added_modified_files < <(printf '%s,' '${{ steps.files.outputs.added_modified }}' | grep -i debian)
+          for added_modified_file in "${added_modified_files[@]}"; do
+            bash "${added_modified_file}"
+          done
+
+  rhel-checks:
+    name: Run modified scripts to test for errors
+    runs-on: ubuntu-latest
+    container: 'richxsl/rhel7:latest'
+    steps:
+      - uses: actions/checkout@v1
+      - id: files
+        uses: jitterbit/get-changed-files@v1
+        with:
+          format: 'csv'
+      - run: |
+          set -x
+          set -e
+          mapfile -d ',' -t added_modified_files < <(printf '%s,' '${{ steps.files.outputs.added_modified }}' | grep -i rhel)
+          for added_modified_file in "${added_modified_files[@]}"; do
+            bash "${added_modified_file}"
+          done
