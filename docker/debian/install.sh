@@ -2,7 +2,7 @@
 set -x
 set -e
 
-apt install curl -y
+apt update && apt install curl -y
 
 curl -fsSL https://get.docker.com | bash
 
