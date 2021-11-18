@@ -2,7 +2,7 @@
 set -x
 set -e
 
-yum install curl
+yum install curl -y
 
 curl -fsSL https://get.docker.com | bash
 
