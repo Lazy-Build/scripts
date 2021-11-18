@@ -3,13 +3,13 @@ set -x
 set -e
 
 # Remove any old version of docker
-sudo yum remove docker docker-client docker-client-latest docker-common docker-latest docker-latest-logrotate docker-logrotate docker-engine
+yum remove docker docker-client docker-client-latest docker-common docker-latest docker-latest-logrotate docker-logrotate docker-engine
 
 curl -fsSL https://get.docker.com | bash
 
-sudo groupadd docker
+groupadd docker
 
-sudo usermod -aG docker $USER
+usermod -aG docker $USER
 
 newgrp docker
 
