@@ -2,13 +2,9 @@
 set -x
 set -e
 
+apt install curl -y
+
 curl -fsSL https://get.docker.com | bash
-
-groupadd docker
-
-usermod -aG docker $USER
-
-newgrp docker
 
 docker run hello-world
 
