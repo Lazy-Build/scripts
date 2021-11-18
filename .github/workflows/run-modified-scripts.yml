@@ -12,8 +12,6 @@ jobs:
         with:
           format: 'csv'
       - run: |
-          set -x
-          set -e
           mapfile -d ',' -t added_modified_files < <(printf '%s,' '${{ steps.files.outputs.added_modified }}' | grep -i ubuntu)
           for added_modified_file in "${added_modified_files[@]}"; do
             bash "${added_modified_file}"
@@ -29,8 +27,6 @@ jobs:
         with:
           format: 'csv'
       - run: |
-          set -x
-          set -e
           mapfile -d ',' -t added_modified_files < <(printf '%s,' '${{ steps.files.outputs.added_modified }}' | grep -i centos)
           for added_modified_file in "${added_modified_files[@]}"; do
             bash "${added_modified_file}"
@@ -47,8 +43,6 @@ jobs:
         with:
           format: 'csv'
       - run: |
-          set -x
-          set -e
           mapfile -d ',' -t added_modified_files < <(printf '%s,' '${{ steps.files.outputs.added_modified }}' | grep -i debian)
           for added_modified_file in "${added_modified_files[@]}"; do
             bash "${added_modified_file}"
@@ -65,8 +59,6 @@ jobs:
         with:
           format: 'csv'
       - run: |
-          set -x
-          set -e
           mapfile -d ',' -t added_modified_files < <(printf '%s,' '${{ steps.files.outputs.added_modified }}' | grep -i rhel)
           for added_modified_file in "${added_modified_files[@]}"; do
             bash "${added_modified_file}"
