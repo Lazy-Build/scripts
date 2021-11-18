@@ -31,17 +31,14 @@ jobs:
     needs: changed-files
     if: ${{needs.changed-files.outputs.ubuntu-files}}
     steps:
-      - uses: actions/checkout@v1
-      - id: files
-        uses: jitterbit/get-changed-files@v1
-        with:
-          format: 'csv'
-      - name: echo changed files
+      - name: Execute changed files
         run: |
           FILES=$(echo ${{needs.changed-files.outputs.ubuntu-files}} | base64 -d)
           for file in $FILES
           do
+            echo "::debug::Running the $file"
             bash "$file"
+            echo "::debug::Finished the $file"
           done
 
   centos-checks:
@@ -51,17 +48,14 @@ jobs:
     needs: changed-files
     if: ${{needs.changed-files.outputs.centos-files}}
     steps:
-      - uses: actions/checkout@v1
-      - id: files
-        uses: jitterbit/get-changed-files@v1
-        with:
-          format: 'csv'
-      - name: echo changed files
+      - name: Execute changed files
         run: |
           FILES=$(echo ${{needs.changed-files.outputs.centos-files}} | base64 -d)
           for file in $FILES
           do
+            echo "::debug::Running the $file"
             bash "$file"
+            echo "::debug::Finished the $file"
           done
 
   debian-checks:
@@ -71,15 +65,12 @@ jobs:
     needs: changed-files
     if: ${{needs.changed-files.outputs.debian-files}}
     steps:
-      - uses: actions/checkout@v1
-      - id: files
-        uses: jitterbit/get-changed-files@v1
-        with:
-          format: 'csv'
-      - name: echo changed files
+      - name: Execute changed files
         run: |
           FILES=$(echo ${{needs.changed-files.outputs.debian-files}} | base64 -d)
           for file in $FILES
           do
+            echo "::debug::Running the $file"
             bash "$file"
+            echo "::debug::Finished the $file"
           done
