@@ -31,6 +31,7 @@ jobs:
     needs: changed-files
     if: ${{needs.changed-files.outputs.ubuntu-files}}
     steps:
+      - uses: actions/checkout@v2
       - name: Execute changed files
         run: |
           FILES=$(echo ${{needs.changed-files.outputs.ubuntu-files}} | base64 -d)
@@ -48,6 +49,7 @@ jobs:
     needs: changed-files
     if: ${{needs.changed-files.outputs.centos-files}}
     steps:
+      - uses: actions/checkout@v2
       - name: Execute changed files
         run: |
           FILES=$(echo ${{needs.changed-files.outputs.centos-files}} | base64 -d)
@@ -65,6 +67,7 @@ jobs:
     needs: changed-files
     if: ${{needs.changed-files.outputs.debian-files}}
     steps:
+      - uses: actions/checkout@v2
       - name: Execute changed files
         run: |
           FILES=$(echo ${{needs.changed-files.outputs.debian-files}} | base64 -d)
