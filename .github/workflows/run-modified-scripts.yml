@@ -16,18 +16,21 @@ jobs:
         # Set outputs using the command.
         run: |
           git fetch origin "+refs/heads/${{github.base_ref}}:refs/remote/origin/${{github.head_ref}}"
-          export FILES="$(git diff --diff-filter=d --name-only origin/"${{github.base_ref}}" --)"
-          echo "$FILES"
-          echo "FILES<<EOF" >> $GITHUB_ENV
-          echo "$FILES" >> $GITHUB_ENV
-          echo "EOF" >> $GITHUB_ENV
+          UBUNTU_FILES="$(git diff --diff-filter=d --name-only origin/"${{github.base_ref}}" -- | grep ubuntu | base64 -w 0)"
+          DEBIAN_FILES="$(git diff --diff-filter=d --name-only origin/"${{github.base_ref}}" -- | grep debian | base64 -w 0)"
+          CENTOS_FILES="$(git diff --diff-filter=d --name-only origin/"${{github.base_ref}}" -- | grep centos | base64 -w 0)"
+          RHEL_FILES="$(git diff --diff-filter=d --name-only origin/"${{github.base_ref}}" -- | grep rhel | base64 -w 0)"
+          echo "::set-output name=ubuntu-files::$(UBUNTU_FILES)"
+          echo "::set-output name=debian-files::$(DEBIAN_FILES)"
+          echo "::set-output name=centos-files::$(CENTOS_FILES)"
+          echo "::set-output name=rhel-files::$(RHEL_FILES)"
 
   ubuntu-checks:
     name: Run modified scripts to test for errors on Ubuntu
     runs-on: ubuntu-latest
     container: 'ubuntu:latest'
     needs: changed-files
-    if: ${{github.env.FILES}}
+    if: ${{needs.changed-files.outputs.ubuntu-files}}
     steps:
       - uses: actions/checkout@v1
       - id: files
@@ -36,7 +39,8 @@ jobs:
           format: 'csv'
       - name: echo changed files
         run: |
-          for file in ${{github.env.FILES}}
+          FILES=$(${{needs.changed-files.outputs.ubuntu-files}} | base64 -d)
+          for file in $FILES
           do
             echo "$file"
           done
@@ -46,7 +50,7 @@ jobs:
     runs-on: ubuntu-latest
     container: 'centos:latest'
     needs: changed-files
-    if: ${{github.env.FILES}}
+    if: ${{needs.changed-files.outputs.centos-files}}
     steps:
       - uses: actions/checkout@v1
       - id: files
@@ -55,7 +59,8 @@ jobs:
           format: 'csv'
       - name: echo changed files
         run: |
-          for file in ${{github.env.FILES}}
+          FILES=$(${{needs.changed-files.outputs.centos-files}} | base64 -d)
+          for file in $FILES
           do
             echo "$file"
           done
@@ -65,7 +70,7 @@ jobs:
     runs-on: ubuntu-latest
     container: 'debian:latest'
     needs: changed-files
-    if: ${{github.env.FILES}}
+    if: ${{needs.changed-files.outputs.debian-files}}
     steps:
       - uses: actions/checkout@v1
       - id: files
@@ -74,7 +79,8 @@ jobs:
           format: 'csv'
       - name: echo changed files
         run: |
-          for file in ${{github.env.FILES}}
+          FILES=$(${{needs.changed-files.outputs.debian-files}} | base64 -d)
+          for file in $FILES
           do
             echo "$file"
           done
@@ -84,7 +90,7 @@ jobs:
     runs-on: ubuntu-latest
     container: 'richxsl/rhel7:latest'
     needs: changed-files
-    if: ${{github.env.FILES}}
+    if: ${{needs.changed-files.outputs.rhel-files}}
     steps:
       - uses: actions/checkout@v1
       - id: files
@@ -93,7 +99,8 @@ jobs:
           format: 'csv'
       - name: echo changed files
         run: |
-          for file in "${{github.env.FILES}}"
+          FILES=$(${{needs.changed-files.outputs.rhel-files}} | base64 -d)
+          for file in $FILES
           do
             echo "$file"
           done
