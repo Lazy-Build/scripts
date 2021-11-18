@@ -27,7 +27,7 @@ jobs:
     runs-on: ubuntu-latest
     container: 'ubuntu:latest'
     needs: changed-files
-    if: ${{env.FILES}}
+    if: ${{github.env.FILES}}
     steps:
       - uses: actions/checkout@v1
       - id: files
@@ -36,7 +36,7 @@ jobs:
           format: 'csv'
       - name: echo changed files
         run: |
-          for file in ${{env.FILES}}
+          for file in ${{github.env.FILES}}
           do
             echo "$file"
           done
@@ -46,7 +46,7 @@ jobs:
     runs-on: ubuntu-latest
     container: 'centos:latest'
     needs: changed-files
-    if: ${{env.FILES}}
+    if: ${{github.env.FILES}}
     steps:
       - uses: actions/checkout@v1
       - id: files
@@ -55,7 +55,7 @@ jobs:
           format: 'csv'
       - name: echo changed files
         run: |
-          for file in ${{env.FILES}}
+          for file in ${{github.env.FILES}}
           do
             echo "$file"
           done
@@ -65,7 +65,7 @@ jobs:
     runs-on: ubuntu-latest
     container: 'debian:latest'
     needs: changed-files
-    if: ${{env.FILES}}
+    if: ${{github.env.FILES}}
     steps:
       - uses: actions/checkout@v1
       - id: files
@@ -74,7 +74,7 @@ jobs:
           format: 'csv'
       - name: echo changed files
         run: |
-          for file in ${{env.FILES}}
+          for file in ${{github.env.FILES}}
           do
             echo "$file"
           done
@@ -84,7 +84,7 @@ jobs:
     runs-on: ubuntu-latest
     container: 'richxsl/rhel7:latest'
     needs: changed-files
-    if: ${{env.FILES}}
+    if: ${{github.env.FILES}}
     steps:
       - uses: actions/checkout@v1
       - id: files
@@ -93,7 +93,7 @@ jobs:
           format: 'csv'
       - name: echo changed files
         run: |
-          for file in "${{env.FILES}}"
+          for file in "${{github.env.FILES}}"
           do
             echo "$file"
           done
