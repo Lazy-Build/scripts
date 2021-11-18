@@ -2,8 +2,6 @@
 set -x
 set -e
 
-apt-get install ca-certificates curl gnupg lsb-release -y
-
 curl -fsSL https://get.docker.com | bash
 
 groupadd docker
