@@ -16,7 +16,7 @@ jobs:
         # Set outputs using the command.
         run: |
           git fetch origin "+refs/heads/${{github.base_ref}}:refs/remote/origin/${{github.head_ref}}"
-          echo "::set-output name=all::$(git diff --diff-filter=d --name-only origin/"${{github.base_ref}}")"
+          echo "::set-output name=all::'$(git diff --diff-filter=d --name-only origin/"${{github.base_ref}}")'"
 
   ubuntu-checks:
     name: Run modified scripts to test for errors
