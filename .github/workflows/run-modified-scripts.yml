@@ -33,7 +33,12 @@ jobs:
         with:
           format: 'csv'
       - name: echo changed files
-        run: echo "${{needs.changed-files.outputs.all}}"
+        run: |
+          for file in "${{needs.changed-files.outputs.all}}"
+          do
+            echo "$file"
+          done
+
   centos-checks:
     name: Run modified scripts to test for errors on CentOS
     runs-on: ubuntu-latest
@@ -47,7 +52,11 @@ jobs:
         with:
           format: 'csv'
       - name: echo changed files
-        run: echo "${{needs.changed-files.outputs.all}}"
+        run: |
+          for file in "${{needs.changed-files.outputs.all}}"
+          do
+            echo "$file"
+          done
 
   debian-checks:
     name: Run modified scripts to test for errors on Debian
@@ -62,7 +71,11 @@ jobs:
         with:
           format: 'csv'
       - name: echo changed files
-        run: echo "${{needs.changed-files.outputs.all}}"
+        run: |
+          for file in "${{needs.changed-files.outputs.all}}"
+          do
+            echo "$file"
+          done
 
   rhel-checks:
     name: Run modified scripts to test for errors on RHEL
@@ -77,4 +90,8 @@ jobs:
         with:
           format: 'csv'
       - name: echo changed files
-        run: echo "${{needs.changed-files.outputs.all}}"
+        run: |
+          for file in "${{needs.changed-files.outputs.all}}"
+          do
+            echo "$file"
+          done
