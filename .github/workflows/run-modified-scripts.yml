@@ -1,65 +1,78 @@
 name: Checks
 on: [ pull_request, workflow_dispatch  ]
 jobs:
+  changed-files:
+    runs-on: ubuntu-latest
+    # Map a step output to a job output
+    outputs:
+      all: ${{ steps.changes.outputs.all}}
+      ts: ${{ steps.changes.outputs.ts }}
+    steps:
+      # Make sure we have some code to diff.
+      - name: Checkout repository
+        uses: actions/checkout@v2
+      - name: Get changed files
+        id: changes
+        # Set outputs using the command.
+        run: |
+          echo "::set-output name=all::$(git diff --name-only --diff-filter=ACMRT ${{ github.event.pull_request.base.sha }} ${{ github.sha }} | xargs)"
+          echo "::set-output name=ts::$(git diff --name-only --diff-filter=ACMRT ${{ github.event.pull_request.base.sha }} ${{ github.sha }} | grep .ts$ | xargs)"
+
   ubuntu-checks:
     name: Run modified scripts to test for errors
     runs-on: ubuntu-latest
     container: 'ubuntu:latest'
+    needs: changed-files
+    if: ${{needs.changed-files.outputs.ts}}
     steps:
       - uses: actions/checkout@v1
       - id: files
         uses: jitterbit/get-changed-files@v1
         with:
           format: 'csv'
-      - run: |
-          mapfile -d ',' -t added_modified_files < <(printf '%s,' '${{ steps.files.outputs.added_modified }}' | grep -i ubuntu)
-          for added_modified_file in "${added_modified_files[@]}"; do
-            bash "${added_modified_file}"
-          done
+      - name: echo changed files
+        run: echo ${{needs.changedfiles.outputs.ts}}
   centos-checks:
     name: Run modified scripts to test for errors
     runs-on: ubuntu-latest
     container: 'centos:latest'
+    needs: changed-files
+    if: ${{needs.changed-files.outputs.ts}}
     steps:
       - uses: actions/checkout@v1
       - id: files
         uses: jitterbit/get-changed-files@v1
         with:
           format: 'csv'
-      - run: |
-          mapfile -d ',' -t added_modified_files < <(printf '%s,' '${{ steps.files.outputs.added_modified }}' | grep -i centos)
-          for added_modified_file in "${added_modified_files[@]}"; do
-            bash "${added_modified_file}"
-          done
+      - name: echo changed files
+        run: echo ${{needs.changedfiles.outputs.ts}}
 
   debian-checks:
     name: Run modified scripts to test for errors
     runs-on: ubuntu-latest
     container: 'debian:latest'
+    needs: changed-files
+    if: ${{needs.changed-files.outputs.ts}}
     steps:
       - uses: actions/checkout@v1
       - id: files
         uses: jitterbit/get-changed-files@v1
         with:
           format: 'csv'
-      - run: |
-          mapfile -d ',' -t added_modified_files < <(printf '%s,' '${{ steps.files.outputs.added_modified }}' | grep -i debian)
-          for added_modified_file in "${added_modified_files[@]}"; do
-            bash "${added_modified_file}"
-          done
+      - name: echo changed files
+        run: echo ${{needs.changedfiles.outputs.ts}}
 
   rhel-checks:
     name: Run modified scripts to test for errors
     runs-on: ubuntu-latest
     container: 'richxsl/rhel7:latest'
+    needs: changed-files
+    if: ${{needs.changed-files.outputs.ts}}
     steps:
       - uses: actions/checkout@v1
       - id: files
         uses: jitterbit/get-changed-files@v1
         with:
           format: 'csv'
-      - run: |
-          mapfile -d ',' -t added_modified_files < <(printf '%s,' '${{ steps.files.outputs.added_modified }}' | grep -i rhel)
-          for added_modified_file in "${added_modified_files[@]}"; do
-            bash "${added_modified_file}"
-          done
+      - name: echo changed files
+        run: echo ${{needs.changedfiles.outputs.ts}}
