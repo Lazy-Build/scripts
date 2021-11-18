@@ -19,7 +19,7 @@ jobs:
           echo "::set-output name=all::'$(git diff --diff-filter=d --name-only origin/"${{github.base_ref}}")'"
 
   ubuntu-checks:
-    name: Run modified scripts to test for errors
+    name: Run modified scripts to test for errors on Ubuntu
     runs-on: ubuntu-latest
     container: 'ubuntu:latest'
     needs: changed-files
@@ -31,9 +31,9 @@ jobs:
         with:
           format: 'csv'
       - name: echo changed files
-        run: echo ${{needs.changedfiles.outputs.ts}}
+        run: echo ${{needs.changed-files.outputs.ts}}
   centos-checks:
-    name: Run modified scripts to test for errors
+    name: Run modified scripts to test for errors on CentOS
     runs-on: ubuntu-latest
     container: 'centos:latest'
     needs: changed-files
@@ -45,10 +45,10 @@ jobs:
         with:
           format: 'csv'
       - name: echo changed files
-        run: echo ${{needs.changedfiles.outputs.ts}}
+        run: echo ${{needs.changed-files.outputs.ts}}
 
   debian-checks:
-    name: Run modified scripts to test for errors
+    name: Run modified scripts to test for errors on Debian
     runs-on: ubuntu-latest
     container: 'debian:latest'
     needs: changed-files
@@ -63,7 +63,7 @@ jobs:
         run: echo ${{needs.changedfiles.outputs.ts}}
 
   rhel-checks:
-    name: Run modified scripts to test for errors
+    name: Run modified scripts to test for errors on RHEL
     runs-on: ubuntu-latest
     container: 'richxsl/rhel7:latest'
     needs: changed-files
