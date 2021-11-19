@@ -34,7 +34,7 @@ jobs:
       - uses: actions/checkout@v2
       - name: Execute changed files
         run: |
-          apt install curl -y
+          apt update && apt install curl -y
           FILES=$(echo ${{needs.changed-files.outputs.ubuntu-files}} | base64 -d)
           for file in $FILES
           do
@@ -53,7 +53,7 @@ jobs:
       - uses: actions/checkout@v2
       - name: Execute changed files
         run: |
-          yum install curl -y
+          yum update && yum install curl -y
           FILES=$(echo ${{needs.changed-files.outputs.centos-files}} | base64 -d)
           for file in $FILES
           do
@@ -72,7 +72,7 @@ jobs:
       - uses: actions/checkout@v2
       - name: Execute changed files
         run: |
-          apt install curl -y
+          apt update && apt install curl -y
           FILES=$(echo ${{needs.changed-files.outputs.debian-files}} | base64 -d)
           for file in $FILES
           do
