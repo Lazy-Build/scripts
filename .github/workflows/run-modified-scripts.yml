@@ -53,7 +53,7 @@ jobs:
       - uses: actions/checkout@v2
       - name: Execute changed files
         run: |
-          yum update && yum install curl -y
+          yum update -q -y && yum install curl -q -y
           FILES=$(echo ${{needs.changed-files.outputs.centos-files}} | base64 -d)
           for file in $FILES
           do
