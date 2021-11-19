@@ -8,4 +8,4 @@ tar -xvf discord.tar.gz
 
 mv Discord /usr/share/discord
 
-mv /usr/share/discord/Discord.desktop /usr/share/applications/
+mv /usr/share/discord/discord.desktop /usr/share/applications/
