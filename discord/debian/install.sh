@@ -4,7 +4,7 @@ set -e
 export DEBIAN_FRONTEND=noninteractive
 
 echo "##########"
-wget http://deb.debian.org/debian/pool/main/libi/libindicator/libindicator_0.5.0-3.debian.tar.xz
+curl "http://deb.debian.org/debian/pool/main/libi/libindicator/libindicator_0.5.0-3.debian.tar.xz" --output libindicator_0.5.0-3.debian.tar.xz
 tar -xvf libindicator_0.5.0-3.debian.tar.xz
 bash debian/libindicator3-7.install
 echo "##########"
