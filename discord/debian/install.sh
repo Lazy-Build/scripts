@@ -4,7 +4,9 @@ set -e
 export DEBIAN_FRONTEND=noninteractive
 
 echo "##########"
-apt-cache search libappindicator1
+wget http://deb.debian.org/debian/pool/main/libi/libindicator/libindicator_0.5.0-3.debian.tar.xz
+tar -xvf libindicator_0.5.0-3.debian.tar.xz
+bash debian/libindicator3-7.install
 echo "##########"
 
 apt install -y libasound2 libatomic1 libgconf-2-4 libnotify4 libnspr4 libnss3 libxss1 libc++1 libappindicator1
