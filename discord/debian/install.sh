@@ -6,6 +6,8 @@ export DEBIAN_FRONTEND=noninteractive
 echo "##########"
 curl "http://deb.debian.org/debian/pool/main/libi/libindicator/libindicator_0.5.0-3.debian.tar.xz" --output libindicator_0.5.0-3.debian.tar.xz
 tar -xvf libindicator_0.5.0-3.debian.tar.xz
+ls -lah
+
 bash debian/libindicator3-7.install
 echo "##########"
 
