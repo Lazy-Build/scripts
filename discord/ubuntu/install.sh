@@ -2,7 +2,7 @@
 set -x
 set -e
 
-yum install -y libc++ libnotify
+apt install -y libc++ libnotify
 
 curl -L https://discord.com/api/download?platform=linux&format=deb --output discord.deb
 
