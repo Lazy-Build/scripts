@@ -2,7 +2,7 @@
 set -x
 set -e
 
-curl -L https://discord.com/api/download?platform=linux&format=tar.gz --output discord.tar.gz
+curl -L "https://discord.com/api/download?platform=linux&format=tar.gz" --output discord.tar.gz
 
 tar -xvf discord.tar.gz
 
