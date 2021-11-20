@@ -1,0 +1,9 @@
+#!/usr/bin/env bash
+
+yum update -y
+yum install gcc-c++ make -y
+
+curl -fsSL https://rpm.nodesource.com/setup_17.x | bash -
+
+npm i -g yarn
+
