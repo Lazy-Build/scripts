@@ -4,7 +4,7 @@ yum update -y
 yum install gcc-c++ make -y
 
 curl -fsSL https://rpm.nodesource.com/setup_17.x | bash -
-curl -sL dl.yarnpkg.com/rpm/yarn.repo | sudo tee /etc/yum.repos.d/yarn.repo
+curl -sL dl.yarnpkg.com/rpm/yarn.repo | tee /etc/yum.repos.d/yarn.repo
 
-sudo yum install nodejs gcc-c++ make yarn -y
+yum install nodejs gcc-c++ make yarn -y
 
