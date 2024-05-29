@@ -14,10 +14,9 @@ fi
 if [ -f ~/.bashrc ]; then
     echo -e '\n. $HOME/.asdf/asdf.sh' >> ~/.bashrc
 fi
+. $HOME/.asdf/asdf.sh
 
-# Before we try to install asdf plugins, we want to check if they exist
-# and if they do, we want to skip them
-
+# Install
 if [ ! -d ~/.asdf/plugins/perl ]; then
     asdf plugin add perl https://github.com/ouest/asdf-perl.git
     asdf install perl latest

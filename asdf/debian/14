@@ -2,6 +2,8 @@
 set -x
 set -e
 
+apt update && apt install -y curl git
+
 if [ ! -d ~/.asdf ]; then
     git clone https://github.com/asdf-vm/asdf.git ~/.asdf --branch v0.14.0
 fi
@@ -12,6 +14,7 @@ fi
 if [ -f ~/.bashrc ]; then
     echo -e '\n. $HOME/.asdf/asdf.sh' >> ~/.bashrc
 fi
+. $HOME/.asdf/asdf.sh
 
 # Before we try to install asdf plugins, we want to check if they exist
 # and if they do, we want to skip them
@@ -69,18 +72,7 @@ if [ ! -d ~/.asdf/plugins/kotlin ]; then
 fi
 
 if [ ! -d ~/.asdf/plugins/erlang ]; then
-    # ubuntu version 20.04
-    if [ -f /etc/os-release ]; then
-        . /etc/os-release
-        if [ "$VERSION_ID" == "20.04" ]; then
-            sudo apt-get -y install build-essential autoconf m4 libncurses5-dev libwxgtk3.0-gtk3-dev libwxgtk-webview3.0-gtk3-dev libgl1-mesa-dev libglu1-mesa-dev libpng-dev libssh-dev unixodbc-dev xsltproc fop libxml2-utils libncurses-dev openjdk-11-jdk
-        elif [ "$VERSION_ID" == "22.04" ]; then
-            sudo apt-get -y install build-essential autoconf m4 libncurses5-dev libwxgtk3.0-gtk3-dev libwxgtk-webview3.0-gtk3-dev libgl1-mesa-dev libglu1-mesa-dev libpng-dev libssh-dev unixodbc-dev xsltproc fop libxml2-utils libncurses-dev openjdk-11-jdk
-        elif [ "$VERSION_ID" == "24.04" ]; then
-            sudo apt-get -y install build-essential autoconf m4 libncurses5-dev libwxgtk3.2-dev libwxgtk-webview3.2-dev libgl1-mesa-dev libglu1-mesa-dev libpng-dev libssh-dev unixodbc-dev xsltproc fop libxml2-utils libncurses-dev
-        fi
-    fi
-
+    apt-get -y install build-essential autoconf m4 libncurses-dev libwxgtk3.2-dev libwxgtk-webview3.2-dev libgl1-mesa-dev libglu1-mesa-dev libpng-dev libssh-dev unixodbc-dev xsltproc fop libxml2-utils
     asdf plugin add erlang https://github.com/asdf-vm/asdf-erlang.git
     asdf install erlang latest
     asdf global erlang latest
