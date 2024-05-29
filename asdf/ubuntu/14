@@ -2,7 +2,7 @@
 set -x
 set -e
 
-apt update && apt install -y curl git
+apt update && apt install -y curl git build-essential make
 
 if [ ! -d ~/.asdf ]; then
     git clone https://github.com/asdf-vm/asdf.git ~/.asdf --branch v0.14.0

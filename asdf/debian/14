@@ -2,7 +2,7 @@
 set -x
 set -e
 
-apt update && apt install -y curl git
+apt update && apt install -y curl git build-essential make
 
 if [ ! -d ~/.asdf ]; then
     git clone https://github.com/asdf-vm/asdf.git ~/.asdf --branch v0.14.0
@@ -26,7 +26,7 @@ if [ ! -d ~/.asdf/plugins/perl ]; then
 fi
 
 if [ ! -d ~/.asdf/plugins/php ]; then
-    sudo apt-get update && sudo apt-get install -y curl autoconf bison build-essential curl gettext git libgd-dev libcurl4-openssl-dev libedit-dev libicu-dev libjpeg-dev libmysqlclient-dev libonig-dev libpng-dev libpq-dev libreadline-dev libsqlite3-dev libssl-dev libxml2-dev libzip-dev openssl pkg-config re2c zlib1g-dev
+    apt-get update && apt-get install -y autoconf bison build-essential gettext libgd-dev libcurl4-openssl-dev libedit-dev libicu-dev libjpeg-dev libmysqlclient-dev libonig-dev libpng-dev libpq-dev libreadline-dev libsqlite3-dev libssl-dev libxml2-dev libzip-dev openssl pkg-config re2c zlib1g-dev
     asdf plugin add php https://github.com/asdf-community/asdf-php.git
     asdf install php latest
 fi
@@ -37,7 +37,7 @@ if [ ! -d ~/.asdf/plugins/rust ]; then
 fi
 
 if [ ! -d ~/.asdf/plugins/ruby ]; then
-    sudo apt-get install -y autoconf patch build-essential rustc libssl-dev libyaml-dev libreadline6-dev zlib1g-dev libgmp-dev libncurses5-dev libffi-dev libgdbm6 libgdbm-dev libdb-dev uuid-dev
+    apt-get install -y autoconf patch build-essential rustc libssl-dev libyaml-dev libreadline6-dev zlib1g-dev libgmp-dev libncurses5-dev libffi-dev libgdbm6 libgdbm-dev libdb-dev uuid-dev
     asdf plugin add ruby https://github.com/asdf-vm/asdf-ruby.git
     asdf install ruby latest
     asdf global ruby latest
@@ -60,7 +60,7 @@ if [ ! -d ~/.asdf/plugins/nodejs ]; then
 fi
 
 if [ ! -d ~/.asdf/plugins/java ]; then
-    sudo apt install -y jq
+    apt install -y jq
     asdf plugin-add java https://github.com/halcyon/asdf-java.git
     asdf install java adoptopenjdk-11.0.16+8
     asdf global java adoptopenjdk-11.0.16+8
