@@ -1,0 +1,96 @@
+#!/bin/bash
+set -x
+set -e
+
+apt update && apt install -y curl git build-essential make unzip
+
+if [ ! -d ~/.asdf ]; then
+    git clone https://github.com/asdf-vm/asdf.git ~/.asdf --branch v0.14.0
+fi
+
+if [ -f ~/.zshrc ]; then
+    echo -e '\n. $HOME/.asdf/asdf.sh' >> ~/.zshrc
+fi
+if [ -f ~/.bashrc ]; then
+    echo -e '\n. $HOME/.asdf/asdf.sh' >> ~/.bashrc
+fi
+. $HOME/.asdf/asdf.sh
+
+# Before we try to install asdf plugins, we want to check if they exist
+# and if they do, we want to skip them
+
+if [ ! -d ~/.asdf/plugins/perl ]; then
+    asdf plugin add perl https://github.com/ouest/asdf-perl.git
+    asdf install perl latest
+    asdf global perl latest
+fi
+
+if [ ! -d ~/.asdf/plugins/php ]; then
+    apt-get update && apt-get install -y autoconf bison gettext libgd-dev libcurl4-openssl-dev libedit-dev libicu-dev libjpeg-dev libmariadb-dev  libonig-dev libpng-dev libpq-dev libreadline-dev libsqlite3-dev libssl-dev libxml2-dev libzip-dev openssl pkg-config re2c zlib1g-dev
+    asdf plugin add php https://github.com/asdf-community/asdf-php.git
+    asdf install php latest
+fi
+if [ ! -d ~/.asdf/plugins/rust ]; then
+    asdf plugin add rust https://github.com/code-lever/asdf-rust.git
+    asdf install rust latest
+    asdf global rust latest
+fi
+
+if [ ! -d ~/.asdf/plugins/ruby ]; then
+    apt-get install -y autoconf patch libssl-dev libyaml-dev libreadline6-dev zlib1g-dev libgmp-dev libncurses5-dev libffi-dev libgdbm6 libgdbm-dev libdb-dev uuid-dev
+    asdf plugin add ruby https://github.com/asdf-vm/asdf-ruby.git
+    asdf install ruby latest
+    asdf global ruby latest
+fi
+
+if [ ! -d ~/.asdf/plugins/go ]; then
+    asdf plugin add go https://github.com/asdf-community/asdf-golang.git
+    asdf install go latest
+fi
+
+if [ ! -d ~/.asdf/plugins/haskell ]; then
+    asdf plugin-add haskell https://github.com/vic/asdf-haskell.git
+    asdf install haskell latest
+fi
+
+if [ ! -d ~/.asdf/plugins/nodejs ]; then
+    asdf plugin add nodejs https://github.com/asdf-vm/asdf-nodejs.git
+    asdf install nodejs latest
+    asdf global nodejs latest
+fi
+
+if [ ! -d ~/.asdf/plugins/java ]; then
+    apt install -y jq
+    asdf plugin-add java https://github.com/halcyon/asdf-java.git
+    asdf install java adoptopenjdk-11.0.16+8
+    asdf global java adoptopenjdk-11.0.16+8
+fi
+
+if [ ! -d ~/.asdf/plugins/kotlin ]; then
+    asdf plugin add kotlin https://github.com/asdf-community/asdf-kotlin.git
+    asdf install kotlin latest
+fi
+
+if [ ! -d ~/.asdf/plugins/erlang ]; then
+    # ubuntu version 20.04
+    if [ -f /etc/os-release ]; then
+        . /etc/os-release
+        if [ "$VERSION_ID" == "20.04" ]; then
+            apt-get -y install build-essential autoconf m4 libncurses5-dev libwxgtk3.0-gtk3-dev libwxgtk-webview3.0-gtk3-dev libgl1-mesa-dev libglu1-mesa-dev libpng-dev libssh-dev unixodbc-dev xsltproc fop libxml2-utils libncurses-dev openjdk-11-jdk
+        elif [ "$VERSION_ID" == "22.04" ]; then
+            apt-get -y install build-essential autoconf m4 libncurses5-dev libwxgtk3.0-gtk3-dev libwxgtk-webview3.0-gtk3-dev libgl1-mesa-dev libglu1-mesa-dev libpng-dev libssh-dev unixodbc-dev xsltproc fop libxml2-utils libncurses-dev openjdk-11-jdk
+        elif [ "$VERSION_ID" == "24.04" ]; then
+            apt-get -y install build-essential autoconf m4 libncurses5-dev libwxgtk3.2-dev libwxgtk-webview3.2-dev libgl1-mesa-dev libglu1-mesa-dev libpng-dev libssh-dev unixodbc-dev xsltproc fop libxml2-utils libncurses-dev
+        fi
+    fi
+
+    asdf plugin add erlang https://github.com/asdf-vm/asdf-erlang.git
+    asdf install erlang latest
+    asdf global erlang latest
+fi
+
+if [ ! -d ~/.asdf/plugins/elixir ]; then
+    asdf plugin-add elixir https://github.com/asdf-vm/asdf-elixir.git
+    asdf install elixir latest
+    asdf global elixir latest
+fi
