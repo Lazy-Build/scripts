@@ -2,7 +2,7 @@
 set -x
 set -e
 
-apt update && apt install -y curl git build-essential make
+apt update && apt install -y curl git build-essential make unzip
 
 if [ ! -d ~/.asdf ]; then
     git clone https://github.com/asdf-vm/asdf.git ~/.asdf --branch v0.14.0
@@ -16,7 +16,9 @@ if [ -f ~/.bashrc ]; then
 fi
 . $HOME/.asdf/asdf.sh
 
-# Install
+# Before we try to install asdf plugins, we want to check if they exist
+# and if they do, we want to skip them
+
 if [ ! -d ~/.asdf/plugins/perl ]; then
     asdf plugin add perl https://github.com/ouest/asdf-perl.git
     asdf install perl latest
@@ -24,7 +26,7 @@ if [ ! -d ~/.asdf/plugins/perl ]; then
 fi
 
 if [ ! -d ~/.asdf/plugins/php ]; then
-    apt-get update && apt-get install -y curl autoconf bison build-essential curl gettext git libgd-dev libcurl4-openssl-dev libedit-dev libicu-dev libjpeg-dev libmysqlclient-dev libonig-dev libpng-dev libpq-dev libreadline-dev libsqlite3-dev libssl-dev libxml2-dev libzip-dev openssl pkg-config re2c zlib1g-dev
+    apt-get update && apt-get install -y autoconf bison gettext libgd-dev libcurl4-openssl-dev libedit-dev libicu-dev libjpeg-dev libmariadb-dev  libonig-dev libpng-dev libpq-dev libreadline-dev libsqlite3-dev libssl-dev libxml2-dev libzip-dev openssl pkg-config re2c zlib1g-dev
     asdf plugin add php https://github.com/asdf-community/asdf-php.git
     asdf install php latest
 fi
